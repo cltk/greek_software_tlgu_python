@@ -45,10 +45,11 @@ def convert(in_filename,
     # if it did we could do :
     # for arg in args:
     #     globals()[arg] = locals()[arg.replace('opt_', '')]
-    global roman, page, blank, acit, bcit, ccit, dcit, cit_id, vcit, wcit
-    global xcit, ycit, cprefix, ecit_blank, zcit, verbose, debug_bracket
-    global debug_cit, debug_special, multiple, ebook_cit_x, ebook_cit_y
-    global nospace, cformat, ecite
+    global opt_roman, opt_page, opt_blank, opt_acit, opt_bcit, opt_ccit
+    global opt_dcit, opt_cit_id, opt_vcit, opt_wcit, opt_xcit, opt_ycit
+    global opt_cprefix, opt_ecit_blank, opt_zcit, opt_verbose,
+    global opt_debug_bracket, opt_debug_cit, opt_debug_special, opt_multiple
+    global opt_ebook_cit_x, opt_ebook_cit_y, opt_nospace, cformat, ecite
     opt_roman = roman
     opt_page = page
     opt_blank = blank

@@ -1,0 +1,50 @@
+# based on: https://github.com/pydata/pandas/blob/master/appveyor.yml
+# and: https://github.com/ogrisel/python-appveyor-demo/blob/master/appveyor.yml
+# and: https://github.com/cython/cython/blob/master/appveyor.yml (which is based on above)
+# so try not to fall into a cyclic dependency when reading this
+matrix:
+  fast_finish: true
+
+environment:
+  global:
+    # SDK v7.0 MSVC Express 2008's SetEnv.cmd script will fail if the
+    # /E:ON and /V:ON options are not enabled in the batch script intepreter
+    # See: http://stackoverflow.com/a/13751649/163740
+    WITH_ENV: "cmd /E:ON /V:ON /C .\\appveyor\\run_with_env.cmd"
+
+  matrix:
+    - PYTHON: "C:\\Python34_64"
+      PYTHON_VERSION: "3.4"
+      PYTHON_ARCH: "64"
+
+    - PYTHON: "C:\\Python35_64"
+      PYTHON_VERSION: "3.5"
+      PYTHON_ARCH: "64"
+
+# We always use a 64-bit machine, but can build x86 distributions
+# with the PYTHON_ARCH variable (which is used by CMD_IN_ENV).
+platform:
+  - x64
+
+install:
+  # Install Python (from the official .msi of http://python.org) and pip when
+  # not already installed.
+  - ps: if (-not(Test-Path($env:PYTHON))) { & appveyor\install.ps1 }
+  - "%PYTHON%\\python.exe --version"
+  - "%PYTHON%\\Scripts\\pip.exe --version"
+  # Prepend newly installed Python to the PATH of this build (this cannot be
+  # done from inside the powershell script as it would require to restart
+  # the parent CMD process).
+  - "SET PATH=%PYTHON%;%PYTHON%\\Scripts;%PATH%"
+
+init:
+  - "ECHO %PYTHON_VERSION% %PYTHON%"
+
+build: off
+build_script:
+  # Build the compiled extension
+  - "%WITH_ENV% python setup.py build"
+
+test_script:
+  # Run the project tests
+  - "%WITH_ENV% python setup.py test"

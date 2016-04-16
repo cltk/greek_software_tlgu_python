@@ -14,6 +14,7 @@
  * 22-Apr-2006 dm -- added includes to satisfy picky gcc
  * 02-Oct-2011 dm -- added unistd.h to get STDOUT_FILENO
  * 16-Oct-2011 dm -- corrected lower case phi code to 03c6 (was phi symbol 3d5)
+ * 16-Apr-2016 ag -- import unistd.h only if unix - else define it
  */
 
 #include <stdlib.h>
@@ -21,9 +22,15 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 #include <stdio.h>
-#include <unistd.h>
 #include <ctype.h>
 #include <string.h>
+#ifdef unix
+#include <unistd.h>
+#else
+#ifndef STDOUT_FILENO
+#define STDOUT_FILENO 1
+#endif
+#endif
 
 #define INRECSIZE 0x2000
 #define OUTRECSIZE 0xFFFFF

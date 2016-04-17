@@ -564,7 +564,7 @@ int tlgu(char *input_file, char *output_file)
 			 	/* book change request, close current file and open a new one */
 				if (opt_verbose) printf("\ntlgu: book change request: %s", previous_bcit[1]);
 				if (close(outfile)) return(1);
-				if (chmod(new_file, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH)) return(1);
+				if (change_mod(new_file, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH)) return(1);
 
 				/* request file information and delete zero-length files
 				 */
@@ -595,7 +595,7 @@ int tlgu(char *input_file, char *output_file)
 		return(1);
 	}
 	if (outfile != STDOUT_FILENO) {
-		if (chmod(new_file, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH)) {
+		if (change_mod(new_file, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH)) {
 			perror("\ntlgu output file chmod");
 			return(1);
 		}

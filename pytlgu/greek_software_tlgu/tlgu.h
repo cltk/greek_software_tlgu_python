@@ -26,6 +26,9 @@
 #include <string.h>
 #ifdef unix
 #include <unistd.h>
+static int change_mod(const char* filename, mode_t mode){
+    return chmod(filename, mode);
+}
 #else
 /* windows compatibility stuff */
 #ifndef STDOUT_FILENO
@@ -40,7 +43,7 @@
  * this function is declared so that we get windows compatibility
  * since the windows includes have a different name for the chmod function
  * */
-int chmod(const char* filename, int mode){
+static int change_mod(const char* filename, int mode){
     return 0;
 }
 /* silence windows underscore functions */

@@ -1261,8 +1261,8 @@ void beta_code(int input_count)
 const char *resolve_cite_format(const char *cformat) {
 	static char *outbuf[511];
 	char nstring[253];
-	*outbuf = 0;
 	const char *c;
+	*outbuf = 0;
 	for (c = cformat; *c; c++) {
 		if (*c == '%') {
 			const char c2 = *(c+1);

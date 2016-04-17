@@ -44,7 +44,6 @@ int chmod(const char* filename, int mode){
     return 0;
 }
 /* silence windows underscore functions */
-#define _CRT_NONSTDC_NO_DEPRECATE
 #endif
 
 #define INRECSIZE 0x2000

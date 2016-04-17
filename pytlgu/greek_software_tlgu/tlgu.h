@@ -27,9 +27,24 @@
 #ifdef unix
 #include <unistd.h>
 #else
+/* windows compatibility stuff */
 #ifndef STDOUT_FILENO
 #define STDOUT_FILENO 1
 #endif
+#define S_IRUSR 0
+#define S_IWUSR 0
+#define S_IRGRP 0
+#define S_IROTH 0
+/* if we are running windows we do nothing
+ * since under windows everything is readable by default
+ * this function is declared so that we get windows compatibility
+ * since the windows includes have a different name for the chmod function
+ * */
+int chmod(const char* filename, int mode){
+    return 0;
+}
+/* silence windows underscore functions */
+#define _CRT_NONSTDC_NO_DEPRECATE
 #endif
 
 #define INRECSIZE 0x2000

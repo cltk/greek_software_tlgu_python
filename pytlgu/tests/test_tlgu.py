@@ -1,8 +1,9 @@
+# -*- coding: utf-8 -*-
 import os
 from pytlgu import convert
 
 here = os.path.dirname(os.path.abspath(__file__))
-expected_output = """
+expected_output = u"""
 βλλον δ' ἀλλλους χαλκρεσιν ἐγχεῃσιν.
 """
 
@@ -19,7 +20,7 @@ def test_convert_no_args(tmpdir):
     inp = os.path.join(here, infile)
     out = tmpdir.join(outfile)
     convert(inp, out.strpath)
-    assert out.read() == expected_output
+    assert out.read_text(encoding='utf-8') == expected_output
 
 
 # # can't assert this - it won't capture the output
